@@ -143,7 +143,7 @@ static long __media_device_enum_links(struct media_device *mdev,
 		unsigned int p;
 
 		for (p = 0; p < entity->num_pads; p++) {
-			struct media_pad_desc pad;
+			struct media_pad_desc pad = {0};
 
 			memset(&pad, 0, sizeof(pad));
 			media_device_kpad_to_upad(&entity->pads[p], &pad);
