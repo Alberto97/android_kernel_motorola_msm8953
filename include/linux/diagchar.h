@@ -66,7 +66,9 @@
 #define DIAG_IOCTL_PERIPHERAL_BUF_DRAIN		36
 #define DIAG_IOCTL_REGISTER_CALLBACK	37
 #define DIAG_IOCTL_HDLC_TOGGLE	38
-#define DIAG_IOCTL_QUERY_CON_ALL	40
+#define DIAG_IOCTL_MD_SUPPORT_LIST 40
+// Alberto97: This should be 40, moved to 41 for backward compatibility
+#define DIAG_IOCTL_QUERY_CON_ALL	41
 
 /* PC Tools IDs */
 #define APQ8060_TOOLS_ID	4062
