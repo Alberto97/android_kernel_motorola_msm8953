@@ -176,6 +176,8 @@ dtb-$(CONFIG_ARCH_MDMCALIFORNIUM) += mdmcalifornium-sim.dtb \
 	mdmcalifornium-v1.1-nand-mtp.dtb \
 	mdmcalifornium-v1.1-nand-dualwifi-mtp.dtb
 
+# Do not include QC default DTBs if not needed
+ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)
 dtb-$(CONFIG_ARCH_MSM8937) += msm8937-rumi.dtb \
 	msm8937-pmi8950-cdp.dtb \
 	msm8937-pmi8937-cdp.dtb \
@@ -192,6 +194,7 @@ dtb-$(CONFIG_ARCH_MSM8937) += msm8937-rumi.dtb \
 	apq8037-pmi8937-cdp.dtb \
 	apq8037-pmi8950-mtp.dtb \
 	apq8037-pmi8937-mtp.dtb
+endif # CONFIG_MMI_DEVICE_DTBS
 
 dtb-$(CONFIG_ARCH_MSM8917) += msm8917-rumi.dtb \
 	apq8017-pmi8937-cdp.dtb \
@@ -230,6 +233,8 @@ dtb-$(CONFIG_ARCH_MSM8940) += msm8940-pmi8937-cdp.dtb \
 	msm8940-pmi8940-rcm.dtb \
 	msm8940-pmi8940-qrd-sku7.dtb
 
+# Do not include QC default DTBs if not needed
+ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)
 dtb-$(CONFIG_ARCH_MSM8953) += msm8953-sim.dtb \
 	msm8953-rumi.dtb \
 	msm8953-cdp.dtb \
@@ -250,6 +255,7 @@ dtb-$(CONFIG_ARCH_MSM8953) += msm8953-sim.dtb \
 	msm8953-pmi8937-mtp.dtb \
 	msm8953-pmi8940-ext-codec-mtp.dtb \
 	msm8953-pmi8937-ext-codec-mtp.dtb
+endif # CONFIG_MMI_DEVICE_DTBS
 
 dtb-$(CONFIG_ARCH_SDM450) += sdm450-rcm.dtb \
 	sdm450-cdp.dtb \
@@ -267,10 +273,13 @@ dtb-$(CONFIG_ARCH_MDM9607) += mdm9607-rumi.dtb \
 	mdm9607-rcm.dtb \
 	mdm9607-mtp-sdcard.dtb
 
+# Do not include QC default DTBs if not needed
+ifneq ($(CONFIG_MMI_DEVICE_DTBS),y)
 dtb-$(CONFIG_ARCH_MSM8916) += msm8952-qrd-skum.dtb \
        msm8952-cdp.dtb \
        msm8952-ext-codec-cdp.dtb \
        msm8952-mtp.dtb
+endif # CONFIG_MMI_DEVICE_DTBS
 
 dtb-$(CONFIG_ARCH_MSM8909) += msm8909-pm8916-mtp.dtb \
 	msm8909w-wtp.dtb \
