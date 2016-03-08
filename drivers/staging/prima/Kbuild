@@ -589,6 +589,9 @@ endif
 # enable the MAC Address auto-generation feature
 CDEFINES += -DWLAN_AUTOGEN_MACADDR_FEATURE
 
+# Moto read MACs from boot params instead of NV file
+CDEFINES += -DMOTO_UTAGS_MAC
+
 ifeq ($(CONFIG_WLAN_FEATURE_11W),y)
 CDEFINES += -DWLAN_FEATURE_11W
 endif
