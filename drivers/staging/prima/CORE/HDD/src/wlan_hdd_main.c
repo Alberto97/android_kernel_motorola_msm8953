@@ -7376,8 +7376,13 @@ VOS_STATUS hdd_request_firmware(char *pfileName,v_VOID_t *pCtx,v_VOID_t **ppfw_d
        }
    }
    else if(!strcmp(WLAN_NV_FILE, pfileName)) {
-
-       status = request_firmware(&pHddCtx->nv, pfileName, pHddCtx->parent_dev);
+        char sysfs_fname[50];
+        if (wcnss_get_wlan_nv_name(sysfs_fname) != 0) {
+            hddLog(VOS_TRACE_LEVEL_INFO, "%s: wcnss_get_wlan_nv_name returned non zero", __func__);
+            memcpy(sysfs_fname, WLAN_NV_FILE, sizeof(WLAN_NV_FILE));
+        }
+        hddLog(VOS_TRACE_LEVEL_INFO, "%s: sysfs_name is: %s",  __func__, sysfs_fname);
+        status = request_firmware(&pHddCtx->nv, sysfs_fname, pHddCtx->parent_dev);
 
        if(status || !pHddCtx->nv || !pHddCtx->nv->data) {
            hddLog(VOS_TRACE_LEVEL_FATAL, "%s: nv %s download failed",
