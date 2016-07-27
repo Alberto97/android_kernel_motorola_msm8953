@@ -505,6 +505,20 @@ static int fpc1020_remove(struct spi_device *spi)
 	return 0;
 }
 
+static void set_fingerprintd_nice(int nice)
+{
+	struct task_struct *p;
+
+	read_lock(&tasklist_lock);
+	for_each_process(p) {
+		if (!memcmp(p->comm, "fingerprintd", 13)) {
+			set_user_nice(p, nice);
+			break;
+		}
+	}
+	read_unlock(&tasklist_lock);
+}
+
 static int fpc1020_suspend(struct spi_device *spi, pm_message_t mesg)
 {
 	struct fpc1020_data *fpc1020 = dev_get_drvdata(&spi->dev);
@@ -512,6 +526,7 @@ static int fpc1020_suspend(struct spi_device *spi, pm_message_t mesg)
 	fpc1020->clocks_suspended = fpc1020->clocks_enabled;
 	dev_info(fpc1020->dev, "fpc1020_suspend\n");
 	if (fpc1020->clocks_suspended)
+		set_fingerprintd_nice(MIN_NICE);
 		__set_clks(fpc1020, false);
 	return 0;
 }
@@ -522,6 +537,7 @@ static int fpc1020_resume(struct spi_device *spi)
 
 	if (fpc1020->clocks_suspended) {
 		dev_info(fpc1020->dev, "fpc1020_resume\n");
+		set_fingerprintd_nice(0);
 		__set_clks(fpc1020, true);
 	}
 	return 0;
