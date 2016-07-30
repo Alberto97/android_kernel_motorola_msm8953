@@ -592,6 +592,12 @@ config QPNP_MISC
 	  and the driver provides an API to check if this interrupt
 	  is available on the current PMIC chip.
 
+config MEMORY_STATE_TIME
+	tristate "Memory freq/bandwidth time statistics"
+	depends on PROFILING
+	help
+	  Memory time statistics exported to /sys/kernel/memory_state_time
+
 config HAPTIC_DRV2605
 	tristate "TI DRV2605 haptic driver"
 	depends on I2C && SYSFS
