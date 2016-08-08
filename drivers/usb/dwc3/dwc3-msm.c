@@ -3149,7 +3149,6 @@ static int dwc3_msm_remove_children(struct device *dev, void *data)
 static int dwc3_msm_remove(struct platform_device *pdev)
 {
 	struct dwc3_msm	*mdwc = platform_get_drvdata(pdev);
-	struct dwc3 *dwc = platform_get_drvdata(mdwc->dwc3);
 	int ret_pm;
 
 	if (cpu_to_affin)
@@ -3179,11 +3178,10 @@ static int dwc3_msm_remove(struct platform_device *pdev)
 		power_supply_unregister(&mdwc->usb_psy);
 	if (mdwc->hs_phy)
 		mdwc->hs_phy->flags &= ~PHY_HOST_MODE;
-
-	dbg_event(0xFF, "Remov put", 0);
 	platform_device_put(mdwc->dwc3);
 	device_for_each_child(&pdev->dev, NULL, dwc3_msm_remove_children);
 
+	dbg_event(0xFF, "Remov put", 0);
 	pm_runtime_disable(mdwc->dev);
 	pm_runtime_barrier(mdwc->dev);
 	pm_runtime_put_sync(mdwc->dev);
@@ -3485,7 +3483,6 @@ psy_error:
 static void dwc3_check_float_lines(struct dwc3_msm *mdwc)
 {
 	int dpdm;
-	struct dwc3 *dwc = platform_get_drvdata(mdwc->dwc3);
 
 	dev_dbg(mdwc->dev, "%s: Check linestate\n", __func__);
 	dwc3_msm_gadget_vbus_draw(mdwc, 0);
@@ -3845,7 +3842,6 @@ static int dwc3_msm_pm_suspend(struct device *dev)
 static int dwc3_msm_pm_resume(struct device *dev)
 {
 	struct dwc3_msm *mdwc = dev_get_drvdata(dev);
-	struct dwc3 *dwc = platform_get_drvdata(mdwc->dwc3);
 
 	dev_dbg(dev, "dwc3-msm PM resume\n");
 
@@ -3865,9 +3861,6 @@ static int dwc3_msm_pm_resume(struct device *dev)
 #ifdef CONFIG_PM_RUNTIME
 static int dwc3_msm_runtime_idle(struct device *dev)
 {
-	struct dwc3_msm *mdwc = dev_get_drvdata(dev);
-	struct dwc3 *dwc = platform_get_drvdata(mdwc->dwc3);
-
 	dev_dbg(dev, "DWC3-msm runtime idle\n");
 	dbg_event(0xFF, "RT Idle", 0);
 
@@ -3877,7 +3870,6 @@ static int dwc3_msm_runtime_idle(struct device *dev)
 static int dwc3_msm_runtime_suspend(struct device *dev)
 {
 	struct dwc3_msm *mdwc = dev_get_drvdata(dev);
-	struct dwc3 *dwc = platform_get_drvdata(mdwc->dwc3);
 
 	dev_dbg(dev, "DWC3-msm runtime suspend\n");
 	dbg_event(0xFF, "RT Sus", 0);
@@ -3888,7 +3880,6 @@ static int dwc3_msm_runtime_suspend(struct device *dev)
 static int dwc3_msm_runtime_resume(struct device *dev)
 {
 	struct dwc3_msm *mdwc = dev_get_drvdata(dev);
-	struct dwc3 *dwc = platform_get_drvdata(mdwc->dwc3);
 
 	dev_dbg(dev, "DWC3-msm runtime resume\n");
 	dbg_event(0xFF, "RT Res", 0);
