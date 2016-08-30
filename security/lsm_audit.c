@@ -222,7 +222,7 @@ static void dump_common_audit_data(struct audit_buffer *ab,
 
 	audit_log_format(ab, " uid=%u",
 		from_kuid(&init_user_ns, current_cred()->uid));
-	audit_log_format(ab, " pid=%d comm=", task_pid_nr(tsk));
+	audit_log_format(ab, " pid=%d comm=", task_tgid_nr(current));
 	audit_log_untrustedstring(ab, tsk->comm);
 
 	switch (a->type) {
@@ -296,7 +296,7 @@ static void dump_common_audit_data(struct audit_buffer *ab,
 	case LSM_AUDIT_DATA_TASK:
 		tsk = a->u.tsk;
 		if (tsk) {
-			pid_t pid = task_pid_nr(tsk);
+			pid_t pid = task_tgid_nr(tsk);
 			if (pid) {
 				audit_log_format(ab, " uid=%u",
 					from_kuid(&init_user_ns,
