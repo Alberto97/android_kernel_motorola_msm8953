@@ -1352,7 +1352,7 @@ v_U8_t* wlan_hdd_cfg80211_get_ie_ptr(
                                      int length, v_U8_t eid);
 
 #if defined(CFG80211_DISCONNECTED_V2) || \
-(LINUX_VERSION_CODE >= KERNEL_VERSION(4, 2, 0))
+(LINUX_VERSION_CODE >= KERNEL_VERSION(3, 18, 0))
 static inline void wlan_hdd_cfg80211_indicate_disconnect(struct net_device *dev,
                                                          bool locally_generated,
                                                          int reason)
