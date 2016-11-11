@@ -6,9 +6,7 @@
 #include <linux/fb.h>
 
 #define KEY_FPS_DOWN	614
-#define VIB_STRENGTH	30
 static DEFINE_MUTEX(hb_lock);
-extern void set_vibrate(int value); 
 
 struct homebutton_data {
 	struct input_dev *hb_dev;
@@ -19,10 +17,8 @@ struct homebutton_data {
 	bool key_down;
 	bool scr_suspended;
 	bool enable;
-	int vib_strength;
 	unsigned int key;
 } hb_data = {
-	.vib_strength = VIB_STRENGTH,
 	.enable = true,
 	.key = KEY_HOME
 };
@@ -30,9 +26,6 @@ struct homebutton_data {
 static void hb_input_callback(struct work_struct *unused) {
 	if (!mutex_trylock(&hb_lock))
 		return;
-
-	if (hb_data.key_down)
-		set_vibrate(hb_data.vib_strength);
 
 	input_report_key(hb_data.hb_dev, hb_data.key, hb_data.key_down);
 	input_sync(hb_data.hb_dev);
@@ -177,33 +170,6 @@ static ssize_t hb_enable_store(struct device *dev,
 static DEVICE_ATTR(enable, (S_IWUSR | S_IRUGO),
 	hb_enable_show, hb_enable_store);
 
-static ssize_t vib_strength_show(struct device *dev,
-		 struct device_attribute *attr, char *buf)
-{
-	return snprintf(buf, PAGE_SIZE, "%d\n", hb_data.vib_strength);
-}
-
-static ssize_t vib_strength_store(struct device *dev,
-		 struct device_attribute *attr, const char *buf, size_t count)
-{
-	int ret;
-	unsigned long input;
-
-	ret = kstrtoul(buf, 0, &input);
-	if (ret < 0)
-		return -EINVAL;
-
-	if (input < 0 || input > 90)
-		input = VIB_STRENGTH;
-
-	hb_data.vib_strength = input;
-
-	return count;
-}
-
-static DEVICE_ATTR(vib_strength, (S_IWUSR | S_IRUGO),
-	vib_strength_show, vib_strength_store);
-
 static ssize_t key_show(struct device *dev,
 		 struct device_attribute *attr, char *buf)
 {
@@ -276,10 +242,6 @@ static int __init hb_init(void)
 	rc = sysfs_create_file(hb_data.homebutton_kobj, &dev_attr_enable.attr);
 	if (rc)
 		pr_err("%s: sysfs_create_file failed for homebutton enable\n", __func__);
-
-	rc = sysfs_create_file(hb_data.homebutton_kobj, &dev_attr_vib_strength.attr);
-	if (rc)
-		pr_err("%s: sysfs_create_file failed for homebutton vib_strength\n", __func__);
 
 	rc = sysfs_create_file(hb_data.homebutton_kobj, &dev_attr_key.attr);
 	if (rc)
