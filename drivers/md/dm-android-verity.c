@@ -608,7 +608,7 @@ static int android_verity_ctr(struct dm_target *ti, unsigned argc, char **argv)
 	dev_t uninitialized_var(dev);
 	struct android_metadata *uninitialized_var(metadata);
 	int err = 0, i, mode;
-	char *key_id, *table_ptr, dummy,
+	char *key_id = NULL, *key_id, *table_ptr, dummy,
 	*verity_table_args[VERITY_TABLE_ARGS + 2 + VERITY_TABLE_OPT_FEC_ARGS];
 	/* One for specifying number of opt args and one for mode */
 	sector_t data_sectors;
