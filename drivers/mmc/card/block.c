@@ -640,10 +640,12 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 		goto cmd_done;
 	}
 
+#ifdef CONFIG_MMC_FFU
 	if (idata->ic.opcode == MMC_FFU_INVOKE_OP) {
 		err = mmc_ffu_invoke(card, idata->buf);
 		goto cmd_done;
 	}
+#endif
 
 	cmd.opcode = idata->ic.opcode;
 	cmd.arg = idata->ic.arg;
