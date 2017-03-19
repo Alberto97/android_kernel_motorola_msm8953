@@ -1944,7 +1944,8 @@ struct snd_soc_card *populate_snd_card_dailinks(struct device *dev)
 		len4 = len3 + ARRAY_SIZE(msm8952_tasha_be_dai);
 	}
 #ifdef CONFIG_SND_SOC_MARLEY
-	else if (!strncmp(card->name, "msm8952-marley-card", 19)) {
+	else if (!strncmp(card->name, "msm8952-marley-card", 19) ||
+            !strncmp(card->name, "msm8939-tapan-snd-card", sizeof("msm8939-tapan-snd-card"))) {
 		int ret, len_2a, len_2b;
 		const char *l35_cpu_dai_name;
 
