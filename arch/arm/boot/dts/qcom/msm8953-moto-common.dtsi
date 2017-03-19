@@ -657,7 +657,7 @@
 	sound {
 		status = "ok";
 		compatible = "qcom,msm8952-audio-slim-codec";
-		qcom,model = "msm8952-marley-card";
+		qcom,model = "msm8939-tapan-snd-card"; // Actually msm8952-marley-card
 
 		/* qcom,marley-mclk-clk-freq = <9600000>; */
 		asoc-platform = <&pcm0>, <&pcm1>, <&pcm2>, <&voip>, <&voice>,
