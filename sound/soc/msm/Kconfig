@@ -227,7 +227,7 @@ config SND_SOC_MSM8X16
 	select SND_HWDEP
         select DTS_EAGLE
 	select SND_SOC_MARLEY if MFD_MARLEY
-	select SWITCH_ARIZONA if MFD_ARIZONA
+	select SWITCH_ARIZONA if MFD_ARIZONA && !ALSA_TO_H2W=y
 	help
 	 To add support for SoC audio on MSM8996.
 	 This will enable sound soc drivers which
