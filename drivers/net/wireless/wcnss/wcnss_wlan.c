@@ -253,6 +253,10 @@ static struct notifier_block wnb = {
 
 #define NVBIN_FILE "wlan/prima/WCNSS_qcom_wlan_nv.bin"
 
+static char *nv_file = NVBIN_FILE;
+module_param(nv_file, charp, S_IWUSR | S_IRUGO);
+MODULE_PARM_DESC(nv_file, "Regulatory file to be picked up based on carrier");
+
 /* On SMD channel 4K of maximum data can be transferred, including message
  * header, so NV fragment size as next multiple of 1Kb is 3Kb.
  */
@@ -2383,17 +2387,17 @@ static void wcnss_nvbin_dnld(void)
 	unsigned int nv_blob_size = 0;
 	const struct firmware *nv = NULL;
 	struct device *dev = &penv->pdev->dev;
-	const char *nv_file_name = (penv->wcnss_nv_name[0] != 0 ?
-					penv->wcnss_nv_name : NVBIN_FILE);
+
+	strncpy(penv->wcnss_nv_name, nv_file, sizeof(penv->wcnss_nv_name));
 
 	down_read(&wcnss_pm_sem);
 
-	pr_info("wcnss: NV file name = %s\n", nv_file_name);
-	ret = request_firmware(&nv, nv_file_name, dev);
+	pr_info("wcnss: NV file name = %s\n", penv->wcnss_nv_name);
+	ret = request_firmware(&nv, penv->wcnss_nv_name, dev);
 
 	if (ret || !nv || !nv->data || !nv->size) {
 		pr_err("wcnss: %s: request_firmware failed for %s (ret = %d)\n",
-			__func__, nv_file_name, ret);
+			__func__, penv->wcnss_nv_name, ret);
 		goto out;
 	}
 
