@@ -148,6 +148,7 @@ struct fpc1020_data {
 	int wlock_time;
 	int clocks_enabled;
 	int clocks_suspended;
+	int key_enable;
 
 	unsigned int irq_cnt;
 };
@@ -330,7 +331,7 @@ static ssize_t nav_set(struct device *dev,
 {
 	struct  fpc1020_data *fpc1020 = dev_get_drvdata(dev);
 
-	if (fpc1020->input == NULL)
+	if (fpc1020->input == NULL || fpc1020->key_enable == 0)
 		return 1;
 
 	/* Based on the input value generate the approrate key events */
@@ -355,12 +356,36 @@ static ssize_t nav_set(struct device *dev,
 }
 static DEVICE_ATTR(nav, S_IWUSR | S_IWGRP, NULL, nav_set);
 
+static ssize_t key_enable_get(struct device *dev,
+		struct device_attribute *attr, char *buf)
+{
+	struct fpc1020_data *fpc1020 = dev_get_drvdata(dev);
+	return scnprintf(buf, PAGE_SIZE, "%d\n", fpc1020->key_enable);
+}
+
+static ssize_t key_enable_set(struct device *dev,
+		struct device_attribute *attr, const char *buf, size_t count)
+{
+	struct  fpc1020_data *fpc1020 = dev_get_drvdata(dev);
+
+	int rc, val;
+	rc = kstrtoint(buf, 10, &val);
+	if (rc)
+		return -EINVAL;
+
+	fpc1020->key_enable = val;
+
+	return count;
+}
+static DEVICE_ATTR(key_enable, S_IWUSR | S_IRUGO, key_enable_get, key_enable_set);
+
 static struct attribute *attributes[] = {
 	&dev_attr_dev_enable.attr,
 	&dev_attr_clk_enable.attr,
 	&dev_attr_irq.attr,
 	&dev_attr_irq_cnt.attr,
 	&dev_attr_nav.attr,
+	&dev_attr_key_enable.attr,
 	NULL
 };
 
@@ -469,6 +494,7 @@ static int fpc1020_probe(struct spi_device *spi)
 	fpc1020->irq_cnt = 0;
 	fpc1020->clocks_enabled = 0;
 	fpc1020->clocks_suspended = 0;
+	fpc1020->key_enable = 0;
 	irqf = IRQF_TRIGGER_RISING | IRQF_ONESHOT;
 
 	rc = devm_request_threaded_irq(dev, gpio_to_irq(fpc1020->irq_gpio),
