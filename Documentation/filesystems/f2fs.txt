@@ -20,7 +20,7 @@ layout, but also for selecting allocation and cleaning algorithms.
 
 The following git tree provides the file system formatting tool (mkfs.f2fs),
 a consistency checking tool (fsck.f2fs), and a debugging tool (dump.f2fs).
->> git://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git
+>> git://git.kernel.org/pub/scm/linux/git/jaegeuk/f2fs-tools.git
 
 For reporting bugs and sending patches, please use the following mailing list:
 >> linux-f2fs-devel@lists.sourceforge.net
@@ -106,6 +106,8 @@ background_gc=%s       Turn on/off cleaning operations, namely garbage
                        Default value for this option is on. So garbage
                        collection is on by default.
 disable_roll_forward   Disable the roll-forward recovery routine
+norecovery             Disable the roll-forward recovery routine, mounted read-
+                       only (i.e., -o ro,disable_roll_forward)
 discard                Issue discard/TRIM commands when a segment is cleaned.
 no_heap                Disable heap-style segment allocation which finds free
                        segments for data from the beginning of main area, while
@@ -122,6 +124,10 @@ disable_ext_identify   Disable the extension list configured by mkfs, so f2fs
 inline_xattr           Enable the inline xattrs feature.
 inline_data            Enable the inline data feature: New created small(<~3.4k)
                        files can be written into inode block.
+inline_dentry          Enable the inline dir feature: data in new created
+                       directory entries can be written into inode block. The
+                       space of inode block which is used to store inline
+                       dentries is limited to ~3.4k.
 flush_merge	       Merge concurrent cache_flush commands as much as possible
                        to eliminate redundant command issues. If the underlying
 		       device handles the cache_flush command relatively slowly,
@@ -131,15 +137,26 @@ nobarrier              This option can be used if underlying storage guarantees
 		       If this option is set, no cache_flush commands are issued
 		       but f2fs still guarantees the write ordering of all the
 		       data writes.
+fastboot               This option is used when a system wants to reduce mount
+                       time as much as possible, even though normal performance
+		       can be sacrificed.
+extent_cache           Enable an extent cache based on rb-tree, it can cache
+                       as many as extent which map between contiguous logical
+                       address and physical address per inode, resulting in
+                       increasing the cache hit ratio. Set by default.
+noextent_cache         Diable an extent cache based on rb-tree explicitly, see
+                       the above extent_cache mount option.
+noinline_data          Disable the inline data feature, inline data feature is
+                       enabled by default.
 
 ================================================================================
 DEBUGFS ENTRIES
 ================================================================================
 
-/sys/kernel/debug/f2fs/ contains information about all the partitions mounted as
+/sys/debug/f2fs/ contains information about all the partitions mounted as
 f2fs. Each file shows the whole f2fs information.
 
-/sys/kernel/debug/f2fs/status includes:
+/sys/debug/f2fs/status includes:
  - major file system information managed by f2fs currently
  - average SIT information about whole segments
  - current memory footprint consumed by f2fs.
@@ -189,6 +206,10 @@ Files in /sys/fs/f2fs/<devname>
 			      The candidates to be discarded are cached until
 			      checkpoint is triggered, and issued during the
 			      checkpoint. By default, it is disabled with 0.
+
+ trim_sections                This parameter controls the number of sections
+                              to be trimmed out in batch mode when FITRIM
+                              conducts. 32 sections is set by default.
 
  ipu_policy                   This parameter controls the policy of in-place
                               updates in f2fs. There are five policies:
