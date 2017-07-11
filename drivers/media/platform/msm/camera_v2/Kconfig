@@ -305,3 +305,9 @@ config MULTI_CAMERA_DEEN
 	default n
 	---help---
 		Enable support for the MULTI camera
+
+config MOT_CAMERA_COMPAT_2016
+	    bool "Qualcomm MSM camera sensor support"
+	    depends on MSMB_CAMERA
+        ---help---
+          This flag enables support for 2016 Motorola devices.
