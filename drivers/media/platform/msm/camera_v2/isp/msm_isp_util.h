@@ -25,6 +25,8 @@
 #endif
 
 #define ALT_VECTOR_IDX(x) {x = 3 - x; }
+
+#ifdef CONFIG_MSMB_CAMERA_2017
 #define MAX_ISP_PING_PONG_DUMP_SIZE 10
 
 struct ping_pong_state {
@@ -45,6 +47,7 @@ struct dump_ping_pong_state {
 };
 
 void msm_isp_dump_ping_pong_mismatch(void);
+#endif
 
 uint32_t msm_isp_get_framedrop_period(
 	enum msm_vfe_frame_skip_pattern frame_skip_pattern);
