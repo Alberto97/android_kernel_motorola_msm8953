@@ -9,6 +9,12 @@ config MSM_CAMERA_SENSOR
           data for camera support. The driver support V4L2
           subdev APIs.
 
+config MSMB_CAMERA_2017
+	    bool "Qualcomm MSM camera sensor support"
+	    depends on MSMB_CAMERA
+        ---help---
+          This flag enables support for 2017 Motorola devices.
+
 config MSM_CPP
         bool "QTI MSM Camera Post Processing Engine support"
         depends on MSMB_CAMERA
