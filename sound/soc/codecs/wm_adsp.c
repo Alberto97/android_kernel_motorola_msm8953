@@ -899,7 +899,7 @@ static int wm_coeff_read_control(struct wm_coeff_ctl *ctl,
 	const struct wm_adsp_region *mem;
 	struct wm_adsp *dsp = ctl->dsp;
 	struct wm_adsp_buf *scratch;
-	int ret;
+	int ret = 0;
 	unsigned int reg;
 	int read_len = 0;
 	size_t toread_len;

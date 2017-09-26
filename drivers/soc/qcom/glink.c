@@ -4191,7 +4191,7 @@ static void glink_core_move_ch_node(struct glink_core_xprt_ctx *xprt_ptr,
  */
 static void glink_core_channel_cleanup(struct glink_core_xprt_ctx *xprt_ptr)
 {
-	unsigned long flags, d_flags;
+	unsigned long flags = 0, d_flags = 0;
 	struct channel_ctx *ctx;
 	struct channel_lcid *temp_lcid, *temp_lcid1;
 	struct glink_core_xprt_ctx *dummy_xprt_ctx;
