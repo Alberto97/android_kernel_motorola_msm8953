@@ -51,7 +51,7 @@ static struct sde_mdp_hw_resource *sde_rotator_hw_alloc(
 	struct sde_mdp_hw_resource *mdp_hw;
 	struct sde_rot_data_type *mdata = sde_rot_get_mdata();
 	int pipe_ndx, offset = ctl_id;
-	int ret;
+	int ret = 0;
 
 	mdp_hw = devm_kzalloc(&mgr->pdev->dev,
 			sizeof(struct sde_mdp_hw_resource), GFP_KERNEL);
@@ -529,7 +529,7 @@ int sde_rotator_r1_init(struct sde_rot_mgr *mgr)
 {
 	struct sde_rot_data_type *mdata = sde_rot_get_mdata();
 	struct sde_rotator_r1_data *hw_data;
-	int ret;
+	int ret = 0;
 
 	if (!mgr || !mgr->pdev) {
 		SDEROT_ERR("null rotator manager/platform device");
