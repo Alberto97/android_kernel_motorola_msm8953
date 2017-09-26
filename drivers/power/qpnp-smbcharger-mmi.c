@@ -4059,7 +4059,7 @@ static int smbchg_wls_get_property(struct power_supply *psy,
 				       enum power_supply_property prop,
 				       union power_supply_propval *val)
 {
-	int rc, pa, ep;
+	int rc, pa = 0, ep = 0;
 	union power_supply_propval ret = {0, };
 	struct smbchg_chip *chip = container_of(psy,
 						struct smbchg_chip, wls_psy);
@@ -4181,7 +4181,7 @@ static int smbchg_usbeb_get_property(struct power_supply *psy,
 				       enum power_supply_property prop,
 				       union power_supply_propval *val)
 {
-	int rc, pa, ep;
+	int rc, pa = 0, ep = 0;
 	union power_supply_propval ret = {0, };
 	struct smbchg_chip *chip = container_of(psy,
 						struct smbchg_chip, usbeb_psy);
@@ -9993,7 +9993,7 @@ static ssize_t force_chg_iusb_show(struct device *dev,
 					struct device_attribute *attr,
 					char *buf)
 {
-	int state;
+	int state = 0;
 	int ret;
 	u8 value;
 
@@ -10253,8 +10253,8 @@ static bool mmi_find_temp_zone(struct smbchg_chip *chip, int temp_c)
 {
 	int prev_zone, num_zones;
 	struct mmi_temp_zone *zones;
-	int hotter_t, hotter_fcc;
-	int colder_t, colder_fcc;
+	int hotter_t = 0, hotter_fcc;
+	int colder_t = 0, colder_fcc;
 	int i;
 	int max_temp;
 

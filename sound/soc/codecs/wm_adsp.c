@@ -1371,7 +1371,7 @@ static int wm_adsp_load(struct wm_adsp *dsp)
 	const struct wmfw_region *region;
 	const struct wm_adsp_region *mem;
 	const char *region_name;
-	char *file, *text;
+	char *file, *text = NULL;
 	struct wm_adsp_buf *buf;
 	unsigned int reg;
 	int regions = 0;

@@ -5207,7 +5207,7 @@ static int cpr_check_tsens(struct cpr_regulator *cpr_vreg)
 
 static int cpr_thermal_init(struct cpr_regulator *cpr_vreg)
 {
-	int rc;
+	int rc = 0;
 	struct device_node *of_node = cpr_vreg->dev->of_node;
 
 	if (!of_find_property(of_node, "qcom,cpr-thermal-sensor-id", NULL))
@@ -6060,7 +6060,7 @@ static int cpr_regulator_probe(struct platform_device *pdev)
 	struct regulator_desc *rdesc;
 	struct device *dev = &pdev->dev;
 	struct regulator_init_data *init_data = pdev->dev.platform_data;
-	int rc;
+	int rc = 0;
 
 	if (!pdev->dev.of_node) {
 		dev_err(dev, "Device tree node is missing\n");
