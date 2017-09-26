@@ -634,7 +634,7 @@ EXPORT_SYMBOL(sp_get_rx_bw_khz);
 static int anx7805_configure_audio(void *client,
 		struct msm_dba_audio_cfg *cfg, u32 flags)
 {
-	unsigned char word_len, Fs;
+	unsigned char word_len = 0, Fs;
 	int Channels = 0;
 
 	/* added basic functionality. To be extended later as per

@@ -117,12 +117,12 @@ irqreturn_t motosh_wake_isr(int irq, void *dev)
 void motosh_irq_wake_thread_func(struct kthread_work *work)
 {
 	int err;
-	unsigned long irq_status;
+	unsigned long irq_status = 0;
 	static int spurious_det;
 	u8 queue_length = 0;
 	u8 queue_index = 0;
 	u8 state = 0;
-	bool valid_queue_len;
+	bool valid_queue_len = false;
 	bool pending_reset = false;
 	u8 pending_reset_reason;
 	unsigned char cmdbuff[MOTOSH_MAXDATA_LENGTH];

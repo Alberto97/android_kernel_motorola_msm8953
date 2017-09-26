@@ -546,7 +546,7 @@ extra:
 
 static int alloc_requests(struct eth_dev *dev, struct gether *link, unsigned n)
 {
-	int	status;
+	int	status = 0;
 
 	spin_lock(&dev->req_lock);
 	/*
@@ -1687,7 +1687,7 @@ struct eth_dev *gether_setup_name(struct usb_gadget *g,
 {
 	struct eth_dev		*dev;
 	struct net_device	*net;
-	int			status;
+	int			status = 0;
 
 	net = alloc_etherdev(sizeof *dev);
 	if (!net)
@@ -1811,7 +1811,7 @@ int gether_register_netdev(struct net_device *net)
 	struct eth_dev *dev;
 	struct usb_gadget *g;
 	struct sockaddr sa;
-	int status;
+	int status = 0;
 
 	if (!net->dev.parent)
 		return -EINVAL;

@@ -1468,7 +1468,7 @@ static irqreturn_t sde_hw_rotator_regdmairq_handler(int irq, void *ptr)
 	irqreturn_t ret = IRQ_NONE;
 	u32 isr;
 	u32 ts;
-	u32 q_id;
+	u32 q_id = 0;
 
 	isr = SDE_ROTREG_READ(rot->mdss_base, REGDMA_CSR_REGDMA_INT_STATUS);
 	ts  = SDE_ROTREG_READ(rot->mdss_base, REGDMA_TIMESTAMP_REG);
