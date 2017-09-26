@@ -141,7 +141,7 @@ static int fan54100_chrg_masked_write_reg(struct i2c_client *client, u8 reg,
 				   u8 value)
 {
 	int curr_val = fan54100_chrg_read_reg(client, reg);
-	int ret;
+	int ret = 0;
 
 	if (curr_val < 0)
 		return ret;

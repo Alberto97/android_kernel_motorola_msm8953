@@ -112,7 +112,7 @@ int motosh_reset_and_init(enum reset_mode mode)
 	struct sched_param sched_normal = { 0 };
 	unsigned int i;
 	int err = 0, ret_err = 0;
-	unsigned char *rst_cmdbuff;
+	unsigned char *rst_cmdbuff = "";
 #ifdef CONFIG_SENSORS_MOTOSH_MOTODISP
 	int mutex_locked = 0;
 #endif /* CONFIG_SENSORS_MOTOSH_MOTODISP */

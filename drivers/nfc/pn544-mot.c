@@ -102,7 +102,7 @@ static ssize_t pn544_dev_read(struct file *filp, char __user *buf,
 {
 	struct pn544_dev *pn544_dev = filp->private_data;
 	char *data;
-	int ret;
+	int ret = 0;
 	int tries = 0;
 
 	data = kzalloc(count, GFP_KERNEL);

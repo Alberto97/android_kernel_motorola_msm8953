@@ -3293,7 +3293,7 @@ static int mdss_dsi_panel_reg_read(struct mdss_panel_data *pdata,
 	int ret;
 	struct dcs_cmd_req cmdreq;
 	struct mdss_dsi_ctrl_pdata *ctrl = NULL;
-	struct mdss_panel_info *pinfo;
+	struct mdss_panel_info *pinfo = NULL;
 	struct dsi_cmd_desc reg_read_cmd = {
 		.dchdr.dtype = DTYPE_DCS_READ,
 		.dchdr.last = 1,
