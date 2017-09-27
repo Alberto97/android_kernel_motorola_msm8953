@@ -20,6 +20,7 @@
 #include <linux/err.h>
 #include <linux/of_platform.h>
 #include <linux/of_device.h>
+#include <linux/power_supply.h>
 #include <linux/spmi.h>
 
 #define LED_CFG_MASK	0x06
@@ -34,6 +35,7 @@
  */
 struct atc_led_data {
 	struct led_classdev	cdev;
+	struct power_supply	*bms_psy;
 	struct spmi_device	*spmi_dev;
 	u32			addr;
 };
@@ -72,6 +74,11 @@ static void atc_led_set(struct led_classdev *led_cdev,
 
 	if (value > LED_ON)
 		value = LED_ON;
+
+	if (value > LED_OFF)
+		power_supply_set_hi_power_state(led->bms_psy, 1);
+	else
+		power_supply_set_hi_power_state(led->bms_psy, 0);
 
 	val = value << LED_CFG_SHIFT;
 	spmi_masked_write(led, led->addr, LED_CFG_MASK, val);
@@ -132,6 +139,8 @@ static int atc_leds_probe(struct spmi_device *spmi)
 		dev_err(&led->spmi_dev->dev,
 			"Unable to read from addr=%#x, rc(%d)\n",
 			led->addr, rc);
+
+	led->bms_psy = power_supply_get_by_name("bms");
 
 	led->cdev.brightness_set = atc_led_set;
 	led->cdev.brightness_get = atc_led_get;
