@@ -365,27 +365,18 @@ int radeon_fbdev_init(struct radeon_device *rdev)
 	ret = drm_fb_helper_init(rdev->ddev, &rfbdev->helper,
 				 rdev->num_crtc,
 				 RADEONFB_CONN_LIMIT);
-	if (ret)
-		goto free;
+	if (ret) {
+		kfree(rfbdev);
+		return ret;
+	}
 
-	ret = drm_fb_helper_single_add_all_connectors(&rfbdev->helper);
-	if (ret)
-		goto fini;
+	drm_fb_helper_single_add_all_connectors(&rfbdev->helper);
 
 	/* disable all the possible outputs/crtcs before entering KMS mode */
 	drm_helper_disable_unused_functions(rdev->ddev);
 
-	ret = drm_fb_helper_initial_config(&rfbdev->helper, bpp_sel);
-	if (ret)
-		goto fini;
-
+	drm_fb_helper_initial_config(&rfbdev->helper, bpp_sel);
 	return 0;
-
-fini:
-	drm_fb_helper_fini(&rfbdev->helper);
-free:
-	kfree(rfbdev);
-	return ret;
 }
 
 void radeon_fbdev_fini(struct radeon_device *rdev)
