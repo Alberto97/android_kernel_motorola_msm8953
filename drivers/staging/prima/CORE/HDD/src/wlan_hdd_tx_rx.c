@@ -2676,7 +2676,7 @@ VOS_STATUS hdd_rx_packet_cbk( v_VOID_t *vosContext,
    struct sk_buff *skb = NULL;
    vos_pkt_t* pVosPacket;
    vos_pkt_t* pNextVosPacket;
-   v_U8_t proto_type;
+   v_U8_t proto_type = 0;
    v_BOOL_t arp_pkt;
    bool track_arp_resp = false;
 

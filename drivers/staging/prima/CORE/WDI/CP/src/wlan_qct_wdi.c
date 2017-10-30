@@ -37831,7 +37831,7 @@ WDI_Status WDI_ProcessSetAllowedActionFramesInd(WDI_ControlBlockType *pWDICtx,
     wpt_uint8 *pSendBuffer;
     wpt_uint16 usDataOffset;
     wpt_uint16 usSendSize;
-    wpt_uint16 usLen;
+    wpt_uint16 usLen = 0;
     struct WDI_AllowedActionFramesInd* pwdiAllowedActionFramesInd;
     tHalAllowedActionFrames* pAllowedActionFrames;
     WDI_Status wdiStatus;

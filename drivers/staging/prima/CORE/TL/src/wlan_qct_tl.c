@@ -14010,7 +14010,7 @@ WLANTL_RmcDeleteRmcSession
 {
     WLANTL_RMC_SESSION *pHead;
     WLANTL_RMC_SESSION *pNode;
-    WLANTL_RMC_SESSION *pPrev;
+    WLANTL_RMC_SESSION *pPrev = NULL;
     tANI_U8               index;
 
     index = WLANTL_RmcHashRmcSession(pMcastAddr);

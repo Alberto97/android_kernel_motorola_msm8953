@@ -2717,7 +2717,7 @@ uint8 WDA_IsWcnssWlanCompiledVersionGreaterThanOrEqual(uint8 major, uint8 minor,
 {    
     VOS_STATUS status = VOS_STATUS_SUCCESS;
     v_CONTEXT_t vosContext = vos_get_global_context(VOS_MODULE_ID_WDA, NULL);
-    tSirVersionType compiledVersion;
+    tSirVersionType compiledVersion = { 0, 0, 0, 0 };
     status = WDA_GetWcnssWlanCompiledVersion(vosContext, &compiledVersion);
     if ((compiledVersion.major > major) || ((compiledVersion.major == major)&& (compiledVersion.minor > minor)) ||
         ((compiledVersion.major == major)&& (compiledVersion.minor == minor) &&(compiledVersion.version > version)) ||
@@ -2735,7 +2735,7 @@ uint8 WDA_IsWcnssWlanReportedVersionGreaterThanOrEqual(uint8 major, uint8 minor,
 {    
     VOS_STATUS status = VOS_STATUS_SUCCESS;
     v_CONTEXT_t vosContext = vos_get_global_context(VOS_MODULE_ID_WDA, NULL);
-    tSirVersionType reportedVersion;
+    tSirVersionType reportedVersion = { 0, 0, 0, 0 };
     status = WDA_GetWcnssWlanReportedVersion(vosContext, &reportedVersion);
     if ((reportedVersion.major > major) || ((reportedVersion.major == major)&& (reportedVersion.minor > minor)) ||
         ((reportedVersion.major == major)&& (reportedVersion.minor == minor) &&(reportedVersion.version > version)) ||
@@ -15194,7 +15194,7 @@ VOS_STATUS WDA_ProcessFwrMemDumpReq(tWDA_CbContext * pWDA,
                          tAniFwrDumpReq* pFwrMemDumpReq)
 {
    VOS_STATUS status = VOS_STATUS_SUCCESS;
-   WDI_Status wstatus;
+   WDI_Status wstatus = 0;
    WDI_FwrMemDumpReqType * pWdiFwrMemDumpReq;
    tWDA_ReqParams *pWdaParams ;
 

@@ -16740,7 +16740,7 @@ tANI_BOOLEAN CsrIsRSOCommandAllowed(tpAniSirGlobal pMac, tANI_U8 command)
 eCsrBand GetCurrentBand(tANI_U8 channel)
 {
     tSirRFBand Rfband;
-    eCsrBand band;
+    eCsrBand band = 0;
 
     Rfband = GetRFBand(channel);
 
