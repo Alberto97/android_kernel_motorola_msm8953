@@ -228,12 +228,12 @@ void motosh_irq_wake_thread_func(struct kthread_work *work)
 #endif /* CONFIG_SENSORS_MOTOSH_MOTODISP */
 	if (irq_status & M_MOTION_DETECT) {
 		motosh_as_data_buffer_write(ps_motosh, DT_MOTION_DETECT,
-				NULL, 0, 0, false);
+				NULL, 0, 0, NULL);
 		dev_dbg(&ps_motosh->client->dev, "Motion Detect");
 	}
 	if (irq_status & M_STATIONARY_DETECT) {
 		motosh_as_data_buffer_write(ps_motosh, DT_STATIONARY_DETECT,
-				NULL, 0, 0, false);
+				NULL, 0, 0, NULL);
 		dev_dbg(&ps_motosh->client->dev, "Stationary Detect");
 	}
 
