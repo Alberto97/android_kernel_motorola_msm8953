@@ -23,8 +23,8 @@
 #endif
 
 typedef unsigned char BYTE;
-typedef unsigned char unchar;
-typedef unsigned int uint;
+//typedef unsigned char unchar;
+//typedef unsigned int uint;
 //typedef bit bool;
 //typedef unsigned long ulong;
 //typedef unsigned int WORD;
