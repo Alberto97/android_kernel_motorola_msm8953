@@ -389,7 +389,7 @@ FSC_S32 processDiscoverIdentity(SopType sop, FSC_U32 * arr_in,
 				__id.cable_vdo = getCableVdo(arr_in[3]);
 			}
 
-			if ((__id.id_header.product_type == AMA)) {
+			if (__id.id_header.product_type == AMA) {
 				__id.has_ama_vdo = TRUE;
 				__id.ama_vdo = getAmaVdo(arr_in[4]);	// !!! assuming it is after Product VDO
 			}
