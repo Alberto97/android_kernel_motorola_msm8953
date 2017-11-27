@@ -684,3 +684,11 @@ KBUILD_CPPFLAGS += $(CDEFINES)
 obj-$(CONFIG_PRIMA_WLAN) += $(MODNAME).o
 obj-$(CONFIG_PRONTO_WLAN) += $(MODNAME).o
 $(MODNAME)-y := $(OBJS)
+
+subdir-ccflags-y += \
+	-Wno-array-bounds \
+	-Wno-empty-body \
+	-Wno-enum-conversion \
+	-Wno-non-literal-null-conversion \
+	-Wno-parentheses-equality \
+	-Wno-typedef-redefinition
