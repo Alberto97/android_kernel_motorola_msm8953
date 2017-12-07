@@ -660,7 +660,7 @@ int usb3813_debug_init(struct usb3813_info *info)
 
 static int set_hsic_state(struct usb3813_info *info, bool enable)
 {
-	int ret = 0;
+	int ret;
 
 	if (!info->vdd_hsic)
 		return 0;
