@@ -27,9 +27,7 @@ static DEFINE_MUTEX(bandwidth_mgr_mutex);
 static struct msm_isp_bandwidth_mgr isp_bandwidth_mgr;
 
 static uint64_t msm_isp_cpp_clk_rate;
-#ifdef CONFIG_MSMB_CAMERA_2017
 static struct dump_ping_pong_state dump_data;
-#endif
 
 #define VFE40_8974V2_VERSION 0x1001001A
 
@@ -1962,7 +1960,6 @@ irqreturn_t msm_isp_process_irq(int irq_num, void *data)
 		return IRQ_HANDLED;
 	}
 
-#ifdef CONFIG_MSMB_CAMERA_2017
 	if (vfe_dev->is_split) {
 		if ((vfe_dev->common_data->dual_vfe_res->vfe_dev[
 			!vfe_dev->pdev->id]) &&
@@ -1996,14 +1993,12 @@ irqreturn_t msm_isp_process_irq(int irq_num, void *data)
 			dump_data.fill_count++;
 		}
 	}
-#endif
 
 	msm_isp_enqueue_tasklet_cmd(vfe_dev, irq_status0, irq_status1,
 					ping_pong_status);
 
 	return IRQ_HANDLED;
 }
-#ifdef CONFIG_MSMB_CAMERA_2017
 void msm_isp_dump_ping_pong_mismatch(void)
 {
 	int index, count;
@@ -2033,7 +2028,6 @@ void msm_isp_dump_ping_pong_mismatch(void)
 		count--;
 	}
 }
-#endif
 void msm_isp_do_tasklet(unsigned long data)
 {
 	unsigned long flags;
