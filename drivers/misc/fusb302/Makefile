@@ -40,3 +40,6 @@ fusb302-objs         := Platform_Linux/fusb30x_driver.o \
                      core/vdm/DisplayPort/configure.o \
                      core/vdm/DisplayPort/dp.o \
                      core/vdm/DisplayPort/dp_system_stubs.o
+
+subdir-ccflags-y += \
+	-Wno-enum-conversion
