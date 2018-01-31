@@ -12967,6 +12967,13 @@ static int hdd_generate_iface_mac_addr_auto(hdd_context_t *pHddCtx,
    unsigned int serialno;
    serialno = wcnss_get_serial_number();
 
+   /* BEGIN Motorola, gambugge, IKSWO-55806: Update OUI for WiFi fallback MAC address */
+   /* Motorola OUI */
+   mac_addr.bytes[0] = 0xF0;
+   mac_addr.bytes[1] = 0xD7;
+   mac_addr.bytes[2] = 0xAA;
+   /* END IKSWO-55806 */
+
    if (0 != serialno)
    {
       /* MAC address has 3 bytes of OUI so we have a maximum of 3
