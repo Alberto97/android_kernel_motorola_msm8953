@@ -731,3 +731,10 @@ config DEFAULT_SWAPPINESS
 	  when user space enable MEMCG it could be too late to set the default
 	  swappiness, and it has to be reconfigured in the kernel layer
 
+config VM_MAX_READAHEAD
+	int "default max readahead window size"
+	default 128
+	help
+	 This sets the VM_MAX_READAHEAD value to allow the readahead window
+	 to grow to a maximum size of configured. This will benefit sequential
+	 read throughput and thus early boot performance.
