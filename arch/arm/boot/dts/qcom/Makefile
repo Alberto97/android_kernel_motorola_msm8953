@@ -302,7 +302,6 @@ dtb-$(CONFIG_ARCH_MSM8953) += msm8953-sim.dtb \
 	msm8953-pmi8937-mtp.dtb \
 	msm8953-pmi8940-ext-codec-mtp.dtb \
 	msm8953-pmi8937-ext-codec-mtp.dtb
-endif # CONFIG_MMI_DEVICE_DTBS
 
 dtb-$(CONFIG_ARCH_SDM450) += sdm450-rcm.dtb \
 	sdm450-cdp.dtb \
@@ -313,6 +312,7 @@ dtb-$(CONFIG_ARCH_SDM450) += sdm450-rcm.dtb \
 	sdm450-iot-mtp.dtb \
 	sda450-cdp.dtb \
 	sda450-mtp.dtb
+endif # CONFIG_MMI_DEVICE_DTBS
 
 ifeq ($(CONFIG_ADDISON_DTB),y)
 dtb-$(CONFIG_ARCH_MSM8953) += msm8953-addison-p1.dtb \
