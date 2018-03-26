@@ -1250,7 +1250,7 @@ config TOUCHSCREEN_HIMAX_CHIPSET
           If unsure, say N.
 
 config TOUCHSCREEN_NT36xxx
-       tristate "novatek touchscreens"
+       bool "Novatek NT36xxx"
        depends on I2C
        help
          Say Y here if you have a nvt touchscreen.
