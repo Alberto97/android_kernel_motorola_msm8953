@@ -42,6 +42,7 @@
 #include <linux/workqueue.h>
 
 #include <linux/motosh.h>
+#include <linux/motosh_context.h>
 
 #define I2C_RETRIES			5
 #define RESET_RETRIES			2
@@ -256,6 +257,16 @@ static ssize_t linear_accel_update_rate_store(
 		return sizeof(uint8_t);
 }
 
+/* Attribute: tabletop_mode */
+static ssize_t tabletop_mode_show(
+	struct device *dev,
+	struct device_attribute *attr,
+	char *buf)
+{
+	uint8_t tabletop = motosh_tabletop_mode();
+	return snprintf(buf, PAGE_SIZE, "%d\n", tabletop);
+}
+
 static struct device_attribute motosh_attributes[] = {
 	__ATTR_RO(timestamp_time_ns),
 	__ATTR(
@@ -283,6 +294,11 @@ static struct device_attribute motosh_attributes[] = {
 		0664,
 		linear_accel_update_rate_show,
 		linear_accel_update_rate_store),
+	__ATTR(
+		tabletop_mode,
+		0664,
+		tabletop_mode_show,
+		NULL),
 	__ATTR_NULL
 };
 
