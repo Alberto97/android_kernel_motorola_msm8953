@@ -1797,8 +1797,18 @@ VOS_STATUS vos_nv_readMultiMacAddress( v_U8_t *pMacAddress,
    v_CONTEXT_t pVosContext= NULL;
 #endif
 
+#ifndef MOTO_UTAGS_MAC
    if((0 == macCount) || (VOS_MAX_CONCURRENCY_PERSONA < macCount) ||
       (NULL == pMacAddress))
+// BEGIN IKSWO-92614
+#else
+   if((0 == macCount) || (VOS_MAX_CONCURRENCY_PERSONA < macCount))
+#endif
+    /* MOTO_UTAGS_MAC specifically calls this func with pMacAddress=NULL for reading from utags and
+       keep it ready in gnvEFSTableV2 so that when this func is called via normal flow with valid
+       pMacAddress mac addresses are copied into pMacAddress.So skip the check since its conflicting
+       with latest QC change to return if these params are invalid, MOTO_UTAGS_MAC any how checks it
+       before using,  END  IKSWO-92614 */
    {
       VOS_TRACE( VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR,
           " Invalid Parameter from NV Client macCount %d, pMacAddress %pK",
