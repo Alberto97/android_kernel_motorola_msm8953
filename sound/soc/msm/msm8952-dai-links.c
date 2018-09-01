@@ -2260,9 +2260,9 @@ struct snd_soc_card *populate_snd_card_dailinks(struct device *dev)
 				memcpy(msm8952_marley_dai_links + len3,
 					msm8952_marley_albus_mods_be_dai,
 					sizeof(msm8952_marley_albus_mods_be_dai));
-				len4 = len3 + ARRAY_SIZE(msm8952_marley_mods_be_dai);
+				len5 = len3 + ARRAY_SIZE(msm8952_marley_mods_be_dai);
 			#else
-				len4 = len3;
+				len5 = len3;
 			#endif
 		} else {
 			memcpy(msm8952_marley_dai_links + len_2a,
@@ -2272,9 +2272,9 @@ struct snd_soc_card *populate_snd_card_dailinks(struct device *dev)
 				memcpy(msm8952_marley_dai_links + len3,
 					msm8952_marley_mods_be_dai,
 					sizeof(msm8952_marley_mods_be_dai));
-				len4 = len3 + ARRAY_SIZE(msm8952_marley_mods_be_dai);
+				len5 = len3 + ARRAY_SIZE(msm8952_marley_mods_be_dai);
 			#else
-				len4 = len3;
+				len5 = len3;
 			#endif
 		}
 	}
