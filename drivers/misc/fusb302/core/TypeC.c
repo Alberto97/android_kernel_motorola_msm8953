@@ -116,6 +116,12 @@ FSC_U32 gRequestOpVoltage = 100;/*set default 100*50mv*/
 static regMask_t Mask;
 static regMaskAdv_t MaskAdv;
 
+void platform_notify_cc_orientation_bool(FSC_BOOL orientation)
+{
+    CC_ORIENTATION val = orientation > 0 ? CC2 : CC1;
+    platform_notify_cc_orientation(val);
+}
+
 const char *fusb_state_string(ConnectionState state)
 {
 	static const char *const names[] = {
@@ -977,10 +983,10 @@ void StateMachineDebugAccessorySource(void)
 		 && (CCTermPDDebounce < CCTypeUndefined))
 		&& (VCONNTerm >= CCTypeRdUSB) && (VCONNTerm < CCTypeUndefined)) {
 		if (CCTermPDDebounce > VCONNTerm) {
-			USBPDEnable(TRUE, SOURCE);
+			USBPDEnable(TRUE, TRUE);
 		} else if (VCONNTerm > CCTermPDDebounce) {
 			ToggleMeasure();
-			USBPDEnable(TRUE, SOURCE);
+			USBPDEnable(TRUE, TRUE);
 		}
 	}
 #ifdef FSC_INTERRUPT_TRIGGERED
@@ -1193,10 +1199,10 @@ void StateMachineDebugAccessorySink(void)
 		 && (CCTermPDDebounce < CCTypeUndefined))
 		&& (VCONNTerm >= CCTypeRdUSB) && (VCONNTerm < CCTypeUndefined)) {
 		if (CCTermPDDebounce > VCONNTerm) {
-			USBPDEnable(TRUE, SINK);
+			USBPDEnable(TRUE, FALSE);
 		} else if (VCONNTerm > CCTermPDDebounce) {
 			ToggleMeasure();
-			USBPDEnable(TRUE, SINK);
+			USBPDEnable(TRUE, FALSE);
 		}
 	}
 #ifdef FSC_INTERRUPT_TRIGGERED
@@ -1250,10 +1256,10 @@ void StateMachineAttachedDebugSink(void)
 		 && (CCTermPDDebounce < CCTypeUndefined))
 		&& (VCONNTerm >= CCTypeRdUSB) && (VCONNTerm < CCTypeUndefined)) {
 		if (CCTermPDDebounce > VCONNTerm) {
-			USBPDEnable(TRUE, SINK);
+			USBPDEnable(TRUE, FALSE);
 		} else if (VCONNTerm > CCTermPDDebounce) {
 			ToggleMeasure();
-			USBPDEnable(TRUE, SINK);
+			USBPDEnable(TRUE, FALSE);
 		}
 	}
 #ifdef FSC_INTERRUPT_TRIGGERED
@@ -1292,10 +1298,10 @@ void StateMachineAttachedDebugSource(void)
 		 && (CCTermPDDebounce < CCTypeUndefined))
 		&& (VCONNTerm >= CCTypeRdUSB) && (VCONNTerm < CCTypeUndefined)) {
 		if (CCTermPDDebounce > VCONNTerm) {
-			USBPDEnable(TRUE, SOURCE);
+			USBPDEnable(TRUE, TRUE);
 		} else if (VCONNTerm > CCTermPDDebounce) {
 			ToggleMeasure();
-			USBPDEnable(TRUE, SOURCE);
+			USBPDEnable(TRUE, TRUE);
 		}
 	}
 #ifdef FSC_INTERRUPT_TRIGGERED
@@ -1565,7 +1571,7 @@ void SetStateAttachedSource(void)
 
 	setStateSource(TRUE);
 
-	platform_notify_cc_orientation(blnCCPinIsCC2);
+	platform_notify_cc_orientation_bool(blnCCPinIsCC2);
 
 	USBPDEnable(TRUE, TRUE);	// Enable the USB PD state machine if applicable (no need to write to Device again), set as DFP
 	StateTimer = tIllegalCable;	// Start dangling illegal cable timeout
@@ -1602,7 +1608,7 @@ void SetStateAttachedSink(void)
 		dual_role_instance_changed(chip->dual_role);
 	ConnState = AttachedSink;	// Set the state machine variable to Attached.Sink
 	setStateSink();
-	platform_notify_cc_orientation(blnCCPinIsCC2);
+	platform_notify_cc_orientation_bool(blnCCPinIsCC2);
 
 	USBPDEnable(TRUE, FALSE);	// Enable the USB PD state machine (no need to write Device again since we are doing it here)
 	StateTimer = T_TIMER_DISABLE;	// Disable the state timer, not used in this state
@@ -1813,7 +1819,7 @@ void SetStateAudioAccessory(void)
 		/*In case of detection CC orientation failed*/
 		if ((!blnCCPinIsCC2) && (!blnCCPinIsCC1))
 			blnCCPinIsCC2 = TRUE;
-		platform_notify_cc_orientation(blnCCPinIsCC2);
+		platform_notify_cc_orientation_bool(blnCCPinIsCC2);
 		if (0 != platform_set_usb_device_enable(TRUE))
 			FUSB_LOG("Failed to enable USB device!\n");
 		usbc_psy.type = POWER_SUPPLY_TYPE_USBC_SINK;
@@ -1842,7 +1848,7 @@ void SetStatePoweredAccessory(void)
 		DeviceWrite(regControl0, 1, &Registers.Control.byte[0]);
 	}
 
-	platform_notify_cc_orientation(blnCCPinIsCC2);
+	platform_notify_cc_orientation_bool(blnCCPinIsCC2);
 
 	USBPDEnable(TRUE, TRUE);
 

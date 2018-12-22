@@ -91,7 +91,7 @@ extern ReqContextType coreReqCurCtx;
 /////////////////////////////////////////////////////////////////////////////
 void PolicyTick(void);
 void InitializePDPolicyVariables(void);
-void USBPDEnable(FSC_BOOL DeviceUpdate, SourceOrSink TypeCDFP);
+void USBPDEnable(FSC_BOOL DeviceUpdate, FSC_BOOL TypeCDFP);
 void USBPDDisable(FSC_BOOL DeviceUpdate);
 void USBPDPolicyEngine(void);
 void PolicyErrorRecovery(void);

@@ -277,7 +277,7 @@ void InitializePDPolicyVariables(void)
 
 // ##################### USB PD Enable / Disable Routines ################### //
 
-void USBPDEnable(FSC_BOOL DeviceUpdate, SourceOrSink TypeCDFP)
+void USBPDEnable(FSC_BOOL DeviceUpdate, FSC_BOOL TypeCDFP)
 {
 	FSC_U8 data[5];
 	IsHardReset = FALSE;
